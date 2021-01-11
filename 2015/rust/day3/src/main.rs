@@ -7,10 +7,18 @@ fn part_1(input: &Vec<char>) {
 
     for direction in input {
         match direction {
-            '>' => { house.0 += 1; }
-            '<' => { house.0 -= 1; }
-            '^' => { house.1 += 1; }
-            'v' => { house.1 -= 1; }
+            '>' => {
+                house.0 += 1;
+            }
+            '<' => {
+                house.0 -= 1;
+            }
+            '^' => {
+                house.1 += 1;
+            }
+            'v' => {
+                house.1 -= 1;
+            }
             _ => {}
         }
         if houses_visited.iter().find(|&&h| h == house).is_none() {
@@ -36,10 +44,18 @@ fn part_2(input: &Vec<char>) {
             &mut house_robo_santa
         };
         match direction {
-            '>' => { (*house).0 += 1; }
-            '<' => { (*house).0 -= 1; }
-            '^' => { (*house).1 += 1; }
-            'v' => { (*house).1 -= 1; }
+            '>' => {
+                (*house).0 += 1;
+            }
+            '<' => {
+                (*house).0 -= 1;
+            }
+            '^' => {
+                (*house).1 += 1;
+            }
+            'v' => {
+                (*house).1 -= 1;
+            }
             _ => {}
         }
         if houses_visited.iter().find(|&&h| h == *house).is_none() {
