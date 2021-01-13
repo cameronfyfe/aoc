@@ -2,6 +2,6 @@
 build:
 	cargo build
 run:
-	cargo run
+	cargo run ../../inputs/day2.txt
 clean:
 	cargo clean

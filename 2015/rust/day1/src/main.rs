@@ -1,4 +1,4 @@
-use std::fs;
+use std::{env, fs};
 
 fn part_1(input: &Vec<char>) {
     let mut floor = 0;
@@ -21,14 +21,15 @@ fn part_2(input: &Vec<char>) {
             _ => 0,
         };
         if floor == -1 {
-            println!("Basement Entry: {}", i+1);
+            println!("Basement Entry: {}", i + 1);
             return;
         }
     }
 }
 
 fn main() {
-    let input = fs::read("input.txt")
+    let args = env::args().collect::<Vec<String>>();
+    let input = fs::read(&args[1])
         .unwrap()
         .iter()
         .map(|c| *c as char)

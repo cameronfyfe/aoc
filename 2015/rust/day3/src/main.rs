@@ -1,4 +1,4 @@
-use std::fs;
+use std::{env, fs};
 
 fn part_1(input: &Vec<char>) {
     let mut houses_visited = Vec::new();
@@ -68,7 +68,8 @@ fn part_2(input: &Vec<char>) {
 }
 
 fn main() {
-    let input = fs::read("input.txt")
+    let args = env::args().collect::<Vec<String>>();
+    let input = fs::read(&args[1])
         .unwrap()
         .iter()
         .map(|&b| b as char)

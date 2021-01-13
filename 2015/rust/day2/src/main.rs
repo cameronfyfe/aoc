@@ -1,4 +1,4 @@
-use std::fs;
+use std::{env, fs};
 
 fn part_1(input: &Vec<Vec<u32>>) {
     let mut amount_of_paper = 0 as u32;
@@ -34,7 +34,8 @@ fn part_2(input: &Vec<Vec<u32>>) {
     println!("ribbon: {}", amount_of_ribbon);
 }
 fn main() {
-    let input = fs::read_to_string("input.txt")
+    let args = env::args().collect::<Vec<String>>();
+    let input = fs::read_to_string(&args[1])
         .unwrap()
         .lines()
         .map(|l| {
