@@ -4,7 +4,7 @@ fn is_nice_alpha(s: &str) -> bool {
     // At least 3 vowels
     s.chars().filter(|c| "aeiou".chars().collect::<Vec<_>>().contains(c)).count() >= 3
     // At least one letter that appears twice in a row
-    && (|| {
+    && {
         let mut i = s.chars().peekable();
         loop {
             let c = match i.next() {
@@ -24,16 +24,16 @@ fn is_nice_alpha(s: &str) -> bool {
                 }
             }
         }
-    })()
+    }
     // Does not contain specified pairs
-    && (|| {
+    && {
         for pair in vec!["ab", "cd", "pq", "xy"] {
             if s.contains(pair) {
                 return false;
             }
         }
         true
-    })()
+    }
 }
 
 fn part_1(input: &str) {
