@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate scan_fmt;
-use serde::{Serialize};
-use std::{env, fs};
+use serde::Serialize;
 use std::collections::HashMap;
+use std::{env, fs};
 
 #[derive(Serialize, Debug)]
 enum WireInput {
@@ -62,15 +62,17 @@ impl Circuit {
 }
 
 fn get_circuits(input: &str) -> Vec<Circuit> {
-    input.lines().map(|line| {
-        let line_logic = line.split(" -> ").collect::<Vec<&str>>();
-        if line_logic.len() != 2 {
-            panic!("Error in line logic syntax. (expecting <logic> -> <wire>)");
-        }
+    input
+        .lines()
+        .map(|line| {
+            let line_logic = line.split(" -> ").collect::<Vec<&str>>();
+            if line_logic.len() != 2 {
+                panic!("Error in line logic syntax. (expecting <logic> -> <wire>)");
+            }
 
-        let (logic, wire) = (line_logic[0], line_logic[1]);
+            let (logic, wire) = (line_logic[0], line_logic[1]);
 
-        Circuit {
+            Circuit {
             wire: wire.to_string(),
             logic:
             // AND
@@ -103,20 +105,19 @@ fn get_circuits(input: &str) -> Vec<Circuit> {
                 Logic::BUF(WireInput::new(&logic))
             }
         }
-    }).collect::<Vec<Circuit>>()
+        })
+        .collect::<Vec<Circuit>>()
 }
 
 fn solve_circuits(mut circuits: Vec<Circuit>) -> HashMap<String, u16> {
-    let mut solved_circuits = HashMap::new(); 
+    let mut solved_circuits = HashMap::new();
     while circuits.len() > 0 {
-        circuits.retain(|circuit| {
-            match circuit.solve(&solved_circuits) {
-                Some(n) => {
-                    solved_circuits.insert(circuit.wire.clone(), n);
-                    false
-                },
-                None => true,
+        circuits.retain(|circuit| match circuit.solve(&solved_circuits) {
+            Some(n) => {
+                solved_circuits.insert(circuit.wire.clone(), n);
+                false
             }
+            None => true,
         });
     }
     solved_circuits
@@ -133,7 +134,10 @@ fn part_2(input: &str, b_new: u16) -> u16 {
     let mut circuits = get_circuits(input);
 
     // Change 'b' to value of 'a' from part 1
-    let i = circuits.iter().position(|c| c.wire == "b").expect("Error: couldn't find 'b'.");
+    let i = circuits
+        .iter()
+        .position(|c| c.wire == "b")
+        .expect("Error: couldn't find 'b'.");
     circuits[i] = Circuit {
         wire: "b".to_string(),
         logic: Logic::BUF(WireInput::new(&b_new.to_string())),
@@ -151,7 +155,6 @@ fn main() {
     println!("--- Part 1 ---");
     let a1 = part_1(&input);
     println!("a: {}", a1); // 16076
-
 
     println!("--- Part 2 ---");
     let a2 = part_2(&input, a1);
