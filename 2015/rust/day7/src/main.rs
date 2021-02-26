@@ -75,36 +75,36 @@ fn get_circuits(input: &str) -> Vec<Circuit> {
             Circuit {
             wire: wire.to_string(),
             logic:
-            // AND
-            if logic.contains("AND") {
-                let (a, b) = scan_fmt!(logic, "{} AND {}", String, String)
-                    .expect("Error parsing AND logic.");
-                Logic::AND(WireInput::new(&a), WireInput::new(&b))
-            // OR
-            } else if logic.contains("OR") {
-                let (a, b) = scan_fmt!(logic, "{} OR {}", String, String)
-                    .expect("Error parsing OR logic.");
-                Logic::OR(WireInput::new(&a), WireInput::new(&b))
-            // NOT
-            } else if logic.contains("NOT") {
-                let a = scan_fmt!(logic, "NOT {}", String)
-                    .expect("Error parsing OR logic.");
-                Logic::NOT(WireInput::new(&a))
-            // LSHIFT
-            } else if logic.contains("LSHIFT") {
-                let (a, n) = scan_fmt!(logic, "{} LSHIFT {}", String, u8)
-                    .expect("Error parsing LSHIFT logic.");
-                Logic::LSHIFT(WireInput::new(&a), n)
-            // RSHIFT
-            } else if logic.contains("RSHIFT") {
-                let (a, n) = scan_fmt!(logic, "{} RSHIFT {}", String, u8)
-                    .expect("Error parsing RSHIFT logic.");
-                Logic::RSHIFT(WireInput::new(&a), n)
-            // BUF
-            } else {
-                Logic::BUF(WireInput::new(&logic))
+                // AND
+                if logic.contains("AND") {
+                    let (a, b) = scan_fmt!(logic, "{} AND {}", String, String)
+                        .expect("Error parsing AND logic.");
+                    Logic::AND(WireInput::new(&a), WireInput::new(&b))
+                // OR
+                } else if logic.contains("OR") {
+                    let (a, b) = scan_fmt!(logic, "{} OR {}", String, String)
+                        .expect("Error parsing OR logic.");
+                    Logic::OR(WireInput::new(&a), WireInput::new(&b))
+                // NOT
+                } else if logic.contains("NOT") {
+                    let a = scan_fmt!(logic, "NOT {}", String)
+                        .expect("Error parsing OR logic.");
+                    Logic::NOT(WireInput::new(&a))
+                // LSHIFT
+                } else if logic.contains("LSHIFT") {
+                    let (a, n) = scan_fmt!(logic, "{} LSHIFT {}", String, u8)
+                        .expect("Error parsing LSHIFT logic.");
+                    Logic::LSHIFT(WireInput::new(&a), n)
+                // RSHIFT
+                } else if logic.contains("RSHIFT") {
+                    let (a, n) = scan_fmt!(logic, "{} RSHIFT {}", String, u8)
+                        .expect("Error parsing RSHIFT logic.");
+                    Logic::RSHIFT(WireInput::new(&a), n)
+                // BUF
+                } else {
+                    Logic::BUF(WireInput::new(&logic))
+                }
             }
-        }
         })
         .collect::<Vec<Circuit>>()
 }
