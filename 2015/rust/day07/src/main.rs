@@ -56,7 +56,6 @@ impl Circuit {
             },
             Logic::LSHIFT(a, s) => a.value(known_wires).map(|n| n << s),
             Logic::RSHIFT(a, s) => a.value(known_wires).map(|n| n >> s),
-            _ => None,
         }
     }
 }
