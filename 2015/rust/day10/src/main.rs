@@ -13,7 +13,6 @@ fn look_and_say(seq: &str) -> String {
             }
         })
         .map(|(count, num)| format!("{}{}", count, num))
-        .collect::<Vec<String>>()
         .join("")
 }
 
