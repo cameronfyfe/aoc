@@ -25,12 +25,12 @@ fn look_and_say_n(seq: &str, n: u32) -> String {
     sequence
 }
 
-fn part_1(input: &str) -> String {
-    look_and_say_n(input, 40)
+fn part_1(input: &str) -> usize {
+    look_and_say_n(input, 40).len()
 }
 
-fn part_2(input: &str) -> String {
-    look_and_say_n(input, 50)
+fn part_2(input: &str) -> usize {
+    look_and_say_n(input, 50).len()
 }
 
 fn main() {
@@ -38,10 +38,10 @@ fn main() {
     let input = fs::read_to_string(&args[1]).expect("Error: can't read input file.");
 
     println!("--- Part 1 ---");
-    println!("sequence length: {}", part_1(&input).len()); // 360154
+    println!("sequence length: {}", part_1(&input)); // 360154
 
     println!("--- Part 2 ---");
-    println!("sequence length: {}", part_2(&input).len()); // 5103798
+    println!("sequence length: {}", part_2(&input)); // 5103798
 }
 
 #[cfg(test)]
