@@ -62,7 +62,9 @@ fn part_2(input: &str) -> usize {
     let (mut machine, mut medicine_molecule) = parse_puzzle_input(input);
 
     // Sort replacements in order of largest length change
-    machine.replacements.sort_by(|a, b| (b.1.len()-b.0.len()).cmp(&(a.1.len()-a.0.len())));
+    machine
+        .replacements
+        .sort_by(|a, b| (b.1.len() - b.0.len()).cmp(&(a.1.len() - a.0.len())));
 
     let mut count = 0;
     while medicine_molecule != "e" {
@@ -77,7 +79,7 @@ fn part_2(input: &str) -> usize {
             }
         }
     }
-    
+
     count
 }
 
