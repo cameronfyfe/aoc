@@ -2,15 +2,15 @@ SRC = src
 INPUTS = ../inputs
 
 SRCS = $(wildcard $(SRC)/*.hs)
-BINS = $(patsubst $(SRC)/%.hs,%,$(SRCS))
-RUNS = $(patsubst %,%.run,$(BINS))
+BINS = $(patsubst $(SRC)/%.hs, %, $(SRCS))
+RUNS = $(addsuffix .run, $(BINS))
 
 .PHONY: default
 default: all
 
 # Build one .hs file
 # ex: `make 01`
-%:: $(SRC)/%.hs
+$(BINS): %: $(SRC)/%.hs
 	ghc -o $@ $^
 
 # Build all .hs files
@@ -19,11 +19,9 @@ all: $(BINS)
 
 # Run 1 .hs file
 # ex: `make 01.run`
-# recursive make because of issue with pattern rules/phony combo
 .PHONY: $(RUNS)
-$(RUNS):
-	@$(MAKE) --no-print-directory $(basename $@)
-	./$(basename $@) $(INPUTS)/day$(basename $@).txt
+$(RUNS): %.run: %
+	./$* $(INPUTS)/day$*.txt
 
 # Clean
 .PHONY: clean
