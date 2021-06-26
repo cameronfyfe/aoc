@@ -1,40 +1,34 @@
 use std::{env, fs};
 
-fn part_1(input: &Vec<char>) {
-    let mut floor = 0;
-    for c in input {
-        floor += match c {
-            '(' => 1,
-            ')' => -1,
-            _ => 0,
-        };
+fn move_floor(c: &char) -> i32 {
+    match c {
+        '(' => 1,
+        ')' => -1,
+        _ => 0,
     }
-    println!("Floor: {}", floor);
 }
 
-fn part_2(input: &Vec<char>) {
-    let mut floor = 0;
-    for (i, c) in input.iter().enumerate() {
-        floor += match c {
-            '(' => 1,
-            ')' => -1,
-            _ => 0,
-        };
-        if floor == -1 {
-            println!("Basement Entry: {}", i + 1);
-            return;
-        }
-    }
+fn part_1(input: &str) -> i32 {
+    input.chars().map(|c| move_floor(&c)).sum()
+}
+
+fn part_2(input: &str) -> Option<usize> {
+    input
+        .chars()
+        .map(|c| move_floor(&c))
+        .scan(0, |floor, m| {
+            *floor += m;
+            Some(*floor)
+        })
+        .position(|floor| floor == -1)
 }
 
 fn main() {
     let args = env::args().collect::<Vec<String>>();
-    let input = fs::read(&args[1])
-        .unwrap()
-        .iter()
-        .map(|c| *c as char)
-        .collect::<Vec<char>>();
+    let input = fs::read_to_string(&args[1]).expect("Error: can't read input file.");
 
-    part_1(&input);
-    part_2(&input);
+    println!("--- Part 1 ---");
+    println!("Floor: {}", part_1(&input));
+    println!("--- Part 2 ---");
+    println!("Basement Entry: {:?}", part_2(&input));
 }
