@@ -14,13 +14,16 @@ $(BINS): %: %.hs
 
 # Build all .hs files
 .PHONY: all
-all: $(BINS)
+all: $(sort $(BINS))
 
 # Run 1 .hs file
 # ex: `make 01.run`
 .PHONY: $(RUNS)
 $(RUNS): %.run: %
-	./$* $(INPUTS)/day$*.txt
+	./$* $(INPUTS)/$*.txt
+
+.PHONY: all.run
+all.run: | $(sort $(RUNS))
 
 # Clean
 .PHONY: clean

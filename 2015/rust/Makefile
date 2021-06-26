@@ -8,22 +8,24 @@ RUNS = $(addsuffix .run, $(BINS))
 .PHONY: default
 default: all
 
-# Build one .hs file
+$(BUILD)/day%.rs: %.rs | $(BUILD)
+	cp $^ $@
+
+# Build one .rs file project
 # ex: `make 01`
 .PHONY: $(BINS)
-$(BINS): %: %.rs | $(BUILD)
-	cp $^ $(BUILD)/day$^
-	cargo single build $(BUILD)/day$^
+$(BINS): %: $(BUILD)/day%.rs
+	cargo single build --release $^
 
-# Build all .hs files
+# Build all .rs file projects
 .PHONY: all
 all: $(sort $(BINS))
 
-# Run 1 .hs file
+# Run 1 .rs file project
 # ex: `make 01.run`
 .PHONY: $(RUNS)
-$(RUNS): %.run: %
-	cargo single run $(BUILD)/day$^ $(INPUTS)/day$*.txt
+$(RUNS): %.run: $(BUILD)/day%.rs
+	cargo single run $^ $(INPUTS)/$*.txt
 
 .PHONY: all.run
 all.run: | $(sort $(RUNS))
