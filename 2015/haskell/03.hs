@@ -22,11 +22,11 @@ move p '<' = Point (x p - 1) (y p    )
 move p _ = p
 
 housesOnPath :: [Char] -> [Point]
-housesOnPath chs = scanl move (Point 0 0) chs
+housesOnPath = scanl move (Point 0 0)
 
 part1 :: String -> Int
-part1 input =
-    (length . nub) (housesOnPath input)
+part1 =
+    (length . nub) . housesOnPath
 
 part2 :: String -> Int
 part2 input =
@@ -35,10 +35,11 @@ part2 input =
     santaHouses = housesOnPath (evens input)
     robotHouses = housesOnPath (odds input)
 
+main :: IO ()
 main = do
     args <- getArgs
     input <- readFile (head args)
-    mapM putStrLn
+    mapM_ putStrLn
         [ "--- Part 1 ---"
         , "Num Houses: " ++ show (part1 input)
         , "--- Part 2 ---"
