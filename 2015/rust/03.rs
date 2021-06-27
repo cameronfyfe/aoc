@@ -1,80 +1,58 @@
 use std::{env, fs};
 
-fn part_1(input: &Vec<char>) {
+fn move_house(loc: &(i32, i32), dir: &char) -> (i32, i32) {
+    match dir {
+        '^' => (loc.0, loc.1 + 1),
+        'v' => (loc.0, loc.1 - 1),
+        '>' => (loc.0 + 1, loc.1),
+        '<' => (loc.0 - 1, loc.1),
+        _ => loc.clone()
+    }
+}
+
+fn part_1(input: &str) -> usize {
     let mut houses_visited = Vec::new();
     let mut house = (0, 0);
     houses_visited.push(house);
 
-    for direction in input {
-        match direction {
-            '>' => {
-                house.0 += 1;
-            }
-            '<' => {
-                house.0 -= 1;
-            }
-            '^' => {
-                house.1 += 1;
-            }
-            'v' => {
-                house.1 -= 1;
-            }
-            _ => {}
-        }
+    for direction in input.chars() {
+        house = move_house(&house, direction);
         if houses_visited.iter().find(|&&h| h == house).is_none() {
             houses_visited.push(house);
         }
     }
 
-    println!("--- Part 1 ---");
-    println!("houses visited: {}", houses_visited.len());
+    houses_visited.len()
 }
 
-fn part_2(input: &Vec<char>) {
+fn part_2(input: &str) -> usize {
     let mut houses_visited = Vec::new();
     let start = (0, 0);
     let mut house_santa = start;
     let mut house_robo_santa = start;
     houses_visited.push(start);
 
-    for (i, direction) in input.iter().enumerate() {
+    for (i, direction) in input.chars().enumerate() {
         let house = if i % 2 == 0 {
             &mut house_santa
         } else {
             &mut house_robo_santa
         };
-        match direction {
-            '>' => {
-                (*house).0 += 1;
-            }
-            '<' => {
-                (*house).0 -= 1;
-            }
-            '^' => {
-                (*house).1 += 1;
-            }
-            'v' => {
-                (*house).1 -= 1;
-            }
-            _ => {}
-        }
+        *house = move_house(house, &direction);
         if houses_visited.iter().find(|&&h| h == *house).is_none() {
             houses_visited.push(*house);
         }
     }
 
-    println!("--- Part 2 ---");
-    println!("houses visited: {}", houses_visited.len());
+    houses_visited.len()
 }
 
 fn main() {
     let args = env::args().collect::<Vec<String>>();
-    let input = fs::read(&args[1])
-        .unwrap()
-        .iter()
-        .map(|&b| b as char)
-        .collect::<Vec<char>>();
+    let input = fs::read_to_string(&args[1]).expect("Error: can't read input file.");
 
-    part_1(&input);
-    part_2(&input);
+    println!("--- Part 1 ---");
+    println!("houses visited: {}", part_1(&input));
+    println!("--- Part 2 ---");
+    println!("houses visited: {}", part_2(&input));
 }
