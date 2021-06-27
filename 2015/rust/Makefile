@@ -21,12 +21,13 @@ $(BINS): %: $(BUILD)/day%.rs
 .PHONY: all
 all: $(sort $(BINS))
 
-# Run 1 .rs file project
+# Run 1 binary
 # ex: `make 01.run`
 .PHONY: $(RUNS)
 $(RUNS): %.run: $(BUILD)/day%.rs
 	cargo single run $^ $(INPUTS)/$*.txt
 
+# Run all binaries
 .PHONY: all.run
 all.run: | $(sort $(RUNS))
 

@@ -16,12 +16,13 @@ $(BINS): %: %.hs
 .PHONY: all
 all: $(sort $(BINS))
 
-# Run 1 .hs file
+# Run 1 binary
 # ex: `make 01.run`
 .PHONY: $(RUNS)
 $(RUNS): %.run: %
 	./$* $(INPUTS)/$*.txt
 
+# Run all binaries
 .PHONY: all.run
 all.run: | $(sort $(RUNS))
 
