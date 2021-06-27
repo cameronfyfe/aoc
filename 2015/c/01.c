@@ -13,7 +13,6 @@ int main(int argc, char *argv[]) {
     int i = 0;
     int basement_entry_position = -1;
     while ( (ch = fgetc(f_input)) != EOF ) {
-        i++;
         switch (ch) {
             case '(':
                 final_floor++;
@@ -27,6 +26,7 @@ int main(int argc, char *argv[]) {
             default:
                 break;
         }
+        i++;
     }
 
     printf("--- Part 1 ---\n");
